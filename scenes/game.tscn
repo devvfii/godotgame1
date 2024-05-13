@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://dpxo05lypj7we" path="res://scenes/player.tscn" id="1_5orqh"]
 [ext_resource type="Texture2D" uid="uid://bxmb06cntwoal" path="res://assets/sprites/world_tileset.png" id="2_8nmhr"]
 [ext_resource type="Script" path="res://scripts/Spawner.gd" id="4_oh30t"]
-[ext_resource type="PackedScene" uid="uid://dwfplkhrrr6la" path="res://scenes/slime.tscn" id="4_x4m6i"]
+[ext_resource type="PackedScene" uid="uid://bf7x03qaofq1g" path="res://scenes/slime.tscn" id="4_x4m6i"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ykwe8"]
 texture = ExtResource("2_8nmhr")
@@ -151,6 +151,6 @@ position = Vector2(167, 84)
 script = ExtResource("4_oh30t")
 
 [node name="Slime" parent="." instance=ExtResource("4_x4m6i")]
-position = Vector2(401, 133)
+position = Vector2(378, 118)
 
 [connection signal="child_entered_tree" from="Player/Camera2D" to="Player" method="_on_camera_2d_child_entered_tree"]
