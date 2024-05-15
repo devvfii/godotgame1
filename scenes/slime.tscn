@@ -1,10 +1,11 @@
-[gd_scene load_steps=31 format=3 uid="uid://bf7x03qaofq1g"]
+[gd_scene load_steps=34 format=3 uid="uid://bf7x03qaofq1g"]
 
 [ext_resource type="Texture2D" uid="uid://0uwdtua7bq88" path="res://assets/enemy/slime-Sheet.png" id="1_sdelf"]
 [ext_resource type="Script" path="res://scripts/slime.gd" id="1_vn1gi"]
 [ext_resource type="Script" path="res://scripts/State Machine.gd" id="3_1cpaf"]
-[ext_resource type="Script" path="res://scripts/EnemyIdle.gd" id="4_nswrr"]
+[ext_resource type="PackedScene" uid="uid://c530pr3b3r838" path="res://scenes/hurt_box.tscn" id="5_6wmbo"]
 [ext_resource type="Script" path="res://scripts/EnemyFollow.gd" id="5_atnl5"]
+[ext_resource type="PackedScene" uid="uid://br5rilejk78ry" path="res://scenes/hit_box.tscn" id="6_ayowu"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6jkb2"]
 atlas = ExtResource("1_sdelf")
@@ -297,6 +298,13 @@ _data = {
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_jb8du"]
 radius = 6.0
+height = 20.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7abdg"]
+size = Vector2(23, 17)
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_6vwk6"]
+radius = 7.0
 height = 22.0
 
 [node name="Slime" type="CharacterBody2D"]
@@ -313,6 +321,7 @@ libraries = {
 }
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2(0, -2)
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_jb8du")
@@ -321,10 +330,29 @@ shape = SubResource("CapsuleShape2D_jb8du")
 script = ExtResource("3_1cpaf")
 initial_state = NodePath("Follow")
 
-[node name="Idle" type="Node" parent="State Machine" node_paths=PackedStringArray("enemy")]
-script = ExtResource("4_nswrr")
-enemy = NodePath("../..")
-
 [node name="Follow" type="Node" parent="State Machine" node_paths=PackedStringArray("enemy")]
 script = ExtResource("5_atnl5")
 enemy = NodePath("../..")
+
+[node name="HurtBox" parent="." instance=ExtResource("5_6wmbo")]
+visible = false
+collision_mask = 4
+
+[node name="CollisionShape2D" parent="HurtBox" index="0"]
+position = Vector2(0.5, -2.5)
+shape = SubResource("RectangleShape2D_7abdg")
+
+[node name="HitBox" parent="." instance=ExtResource("6_ayowu")]
+visible = false
+position = Vector2(-3.53798, -2.2936)
+collision_layer = 2
+
+[node name="CollisionShape2D" parent="HitBox" index="0"]
+position = Vector2(3.53798, 0.2936)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_6vwk6")
+
+[connection signal="hurt" from="HurtBox" to="." method="_on_hurt_box_hurt"]
+
+[editable path="HurtBox"]
+[editable path="HitBox"]

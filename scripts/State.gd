@@ -3,6 +3,8 @@ extends Node
 class_name State
 signal Transitioned
 
+var state_name : String
+
 func Enter():
 	pass
 	
@@ -16,4 +18,4 @@ func Physics_Update(_delta: float):
 	pass
 
 func getState():
-	pass
+	return state_name

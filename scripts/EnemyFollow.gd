@@ -4,19 +4,16 @@ class_name EnemyFollow
 @export var enemy: CharacterBody2D
 @export var move_speed := 40.0
 
-var state_name := "Follow"
 var player: CharacterBody2D
 
-func getState():
-	return state_name
-
 func Enter():
+	state_name = "Follow"
 	player = get_tree().get_first_node_in_group("player")
 
 func Physics_Update(delta: float):
 	var direction = player.global_position - enemy.global_position
 	
-	if direction.length() > 25:
+	if direction.length() > 10:
 		enemy.velocity = direction.normalized() * move_speed
 	else:
 		enemy.velocity = Vector2()

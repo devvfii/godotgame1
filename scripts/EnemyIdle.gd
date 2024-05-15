@@ -4,7 +4,6 @@ class_name EnemyIdle
 @export var enemy: CharacterBody2D
 @export var move_speed := 10.0
 
-var state_name := "Idle"
 var move_direction : Vector2
 var wander_time : float
 var player : CharacterBody2D
@@ -13,10 +12,8 @@ func randomize_wander():
 	move_direction = Vector2(randf_range(-1,1), randf_range(-1,1)).normalized()
 	wander_time = randf_range(1,3)
 	
-func getState():
-	return state_name
-	
 func Enter():
+	state_name = "Idle"
 	player = get_tree().get_first_node_in_group("player")
 	randomize_wander()
 	
