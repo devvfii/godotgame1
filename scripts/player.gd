@@ -9,6 +9,7 @@ extends CharacterBody2D
 @onready var dash_sword = $AttackObjects/Sword
 
 var speed = 120.0
+var hp = 100.0
 var mouse_position
 var input_vector
 
@@ -129,3 +130,8 @@ func _on_attack_cd_timeout():
 func _on_dash_timer_timeout():
 	isDashing = false
 	speed = 120
+
+
+func _on_hurt_box_hurt(damage):
+	hp -= damage
+	print(hp)

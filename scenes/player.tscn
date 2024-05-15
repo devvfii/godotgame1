@@ -1,9 +1,10 @@
-[gd_scene load_steps=44 format=3 uid="uid://dpxo05lypj7we"]
+[gd_scene load_steps=46 format=3 uid="uid://dpxo05lypj7we"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_3ui81"]
 [ext_resource type="Texture2D" uid="uid://qe4d8bdg8xn4" path="res://assets/sprites/knight.png" id="1_un3vt"]
 [ext_resource type="Texture2D" uid="uid://bfhh48jwwr7dk" path="res://assets/player/cursor.png" id="3_q2f56"]
 [ext_resource type="PackedScene" uid="uid://cyiyj1ebmlwdx" path="res://scenes/sword.tscn" id="4_f2hgx"]
+[ext_resource type="PackedScene" uid="uid://c530pr3b3r838" path="res://scenes/hurt_box.tscn" id="5_7c6dn"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4o8i8"]
 atlas = ExtResource("1_un3vt")
@@ -400,8 +401,10 @@ _data = {
 [sub_resource type="CircleShape2D" id="CircleShape2D_4v5o3"]
 radius = 5.0
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_50va4"]
+size = Vector2(10, 10)
+
 [node name="Player" type="CharacterBody2D" groups=["player"]]
-collision_layer = 2
 script = ExtResource("1_3ui81")
 
 [node name="Body" type="AnimatedSprite2D" parent="."]
@@ -416,7 +419,8 @@ libraries = {
 }
 speed_scale = 1.2
 
-[node name="Hitbox" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2(0, 7)
 shape = SubResource("CircleShape2D_4v5o3")
 
@@ -437,7 +441,18 @@ offset = Vector2(0, -20)
 
 [node name="Sword" parent="AttackObjects" instance=ExtResource("4_f2hgx")]
 
+[node name="HurtBox" parent="." instance=ExtResource("5_7c6dn")]
+position = Vector2(-3.53798, -2.2936)
+collision_mask = 2
+
+[node name="CollisionShape2D" parent="HurtBox" index="0"]
+position = Vector2(3.53798, 9.2936)
+shape = SubResource("RectangleShape2D_50va4")
+
 [connection signal="animation_finished" from="Body/AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
 [connection signal="timeout" from="Timers/SkillCD" to="." method="_on_skill_cd_timeout"]
 [connection signal="timeout" from="Timers/AttackCD" to="." method="_on_attack_cd_timeout"]
 [connection signal="timeout" from="Timers/DashTimer" to="." method="_on_dash_timer_timeout"]
+[connection signal="hurt" from="HurtBox" to="." method="_on_hurt_box_hurt"]
+
+[editable path="HurtBox"]
