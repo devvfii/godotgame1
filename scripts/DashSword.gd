@@ -1,12 +1,16 @@
 extends Sprite2D
 
 @onready var animation_player = $AnimationPlayer
+@onready var hitbox = $HitBox/CollisionShape2D
 
 var direction_vector
 var isSwinging = false
 var start
 var speed = 450 * PI / 180
 const SWING_FRICTION = 680 * PI / 180
+
+func _ready():
+	hitbox.disabled = true
 
 func activate(aim_vector):
 	direction_vector = aim_vector

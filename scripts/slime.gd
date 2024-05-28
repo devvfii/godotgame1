@@ -5,19 +5,11 @@ class_name Slime
 @onready var animation_player = $AnimationPlayer
 @onready var animated_sprite_2d = $AnimatedSprite2D
 @onready var state_machine = $"State Machine"
+@onready var health = $HealthComponent
 
-var hp: float
 var speed: float
 var baseatk: float
 var target: CharacterBody2D
-
-static func new_enemy(target: CharacterBody2D, hp := 100.0, speed := 60.0, baseatk := 10) -> Slime:
-	var new_enemy: Slime = load("res://scenes/slime.tscn").instantiate()
-	new_enemy.hp = hp
-	new_enemy.speed = speed
-	new_enemy.baseatk = baseatk
-	new_enemy.target = target
-	return new_enemy
 	
 func _ready():
 	pass
@@ -39,7 +31,6 @@ func _physics_process(_delta):
 
 
 
-func _on_hurt_box_hurt(damage):
-	hp -= damage
-	if hp <= 0:
-		queue_free()
+func _on_hurt_box_hurt(attack):
+	health.damage(attack)
+	

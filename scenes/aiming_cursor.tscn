@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://cswqrjwso4m7c"]
+
+[ext_resource type="Script" path="res://scripts/aiming_cursor.gd" id="1_d2akh"]
+[ext_resource type="Texture2D" uid="uid://bfhh48jwwr7dk" path="res://assets/player/cursor.png" id="1_vcy13"]
+
+[node name="AimingCursor" type="Node2D"]
+script = ExtResource("1_d2akh")
+maxDistance = 30
+
+[node name="Sprite" type="Sprite2D" parent="."]
+position = Vector2(0, 7)
+texture = ExtResource("1_vcy13")
+offset = Vector2(0, -20)
