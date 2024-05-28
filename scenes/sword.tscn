@@ -138,6 +138,7 @@ libraries = {
 [node name="HitBox" parent="." instance=ExtResource("3_b4cu6")]
 position = Vector2(2.43244, -9.64218)
 collision_layer = 4
+damage = 50
 
 [node name="CollisionShape2D" parent="HitBox" index="0"]
 position = Vector2(13.8492, -6.72638)

@@ -1,7 +1,7 @@
 extends Area2D
 
 @export_enum("Cooldown", "HitOnce", "DisableHitBox") var HurtBoxType = 0
-@export var damage : int
+@export var health_component : HealthComponent
 
 @onready var collision = $CollisionShape2D
 @onready var timer = $Timer
@@ -21,9 +21,13 @@ func _on_area_entered(area):
 					area.tempdisable()
 		
 		var attack = Attack.new()
-		attack.basedamage = damage
+		attack.basedamage = area.damage
 		
 		emit_signal("hurt", attack)
+
+func damage(attack: Attack):
+	if health_component:
+		health_component.damage(attack)
 
 func _on_timer_timeout():
 	collision.call_deferred("set", "disabled", false)
