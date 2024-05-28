@@ -301,20 +301,20 @@ initial_state = NodePath("Follow")
 script = ExtResource("5_atnl5")
 enemy = NodePath("../..")
 
-[node name="HurtBox" parent="." instance=ExtResource("5_0uk7n")]
+[node name="HurtBox" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("5_0uk7n")]
 visible = false
 collision_mask = 4
-damage = 50
+health_component = NodePath("../HealthComponent")
 
 [node name="CollisionShape2D" parent="HurtBox" index="0"]
 position = Vector2(0.5, -2.5)
 shape = SubResource("RectangleShape2D_7abdg")
 
-[node name="HitBox" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("6_w1cxc")]
+[node name="HitBox" parent="." instance=ExtResource("6_w1cxc")]
 visible = false
 position = Vector2(-3.53798, -2.2936)
 collision_layer = 2
-health_component = NodePath("../HealthComponent")
+damage = 20
 
 [node name="CollisionShape2D" parent="HitBox" index="0"]
 position = Vector2(3.53798, 0.2936)
