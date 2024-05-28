@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://qe4d8bdg8xn4" path="res://assets/sprites/knight.png" id="1_un3vt"]
 [ext_resource type="PackedScene" uid="uid://cswqrjwso4m7c" path="res://scenes/aiming_cursor.tscn" id="3_jh0uo"]
 [ext_resource type="PackedScene" uid="uid://cyiyj1ebmlwdx" path="res://scenes/sword.tscn" id="4_f2hgx"]
-[ext_resource type="PackedScene" uid="uid://c530pr3b3r838" path="res://scenes/utilcomponents/hurt_box.tscn" id="5_7c6dn"]
+[ext_resource type="PackedScene" uid="uid://c530pr3b3r838" path="res://scenes/hurt_box.tscn" id="5_7c6dn"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4o8i8"]
 atlas = ExtResource("1_un3vt")
@@ -442,7 +442,6 @@ position = Vector2(-4.76837e-07, 7)
 [node name="HurtBox" parent="." instance=ExtResource("5_7c6dn")]
 position = Vector2(-3.53798, -2.2936)
 collision_mask = 2
-damage = 30
 
 [node name="CollisionShape2D" parent="HurtBox" index="0"]
 position = Vector2(3.53798, 9.2936)

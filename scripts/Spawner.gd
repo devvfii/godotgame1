@@ -1,6 +1,6 @@
 extends Marker2D
 
-@onready var player = $"../Player"
+@onready var player = get_tree().get_first_node_in_group("player")
 @export var spawn_interval_min : float = 5
 @export var spawn_interval_max : float = 10
 

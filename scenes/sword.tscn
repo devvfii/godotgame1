@@ -1,58 +1,42 @@
-[gd_scene load_steps=10 format=3 uid="uid://cyiyj1ebmlwdx"]
+[gd_scene load_steps=9 format=3 uid="uid://cyiyj1ebmlwdx"]
 
 [ext_resource type="Texture2D" uid="uid://b774t2jjpp4rd" path="res://sword.png" id="1_v3cae"]
 [ext_resource type="Script" path="res://scripts/DashSword.gd" id="2_uvf06"]
-[ext_resource type="PackedScene" uid="uid://br5rilejk78ry" path="res://scenes/hit_box.tscn" id="3_sdv0x"]
-
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_bdllh"]
-radius = 7.0
-height = 26.0
+[ext_resource type="PackedScene" uid="uid://cytriikyqsa7y" path="res://scenes/utilcomponents/hit_box.tscn" id="3_b4cu6"]
 
 [sub_resource type="Animation" id="Animation_06uih"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Area2D/CollisionShape2D:disabled")
+tracks/0/path = NodePath(".:visible")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [true]
+"values": [false]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath(".:visible")
+tracks/1/path = NodePath(".:rotation")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
+"update": 0,
+"values": [-0.610865]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath(".:rotation")
+tracks/2/path = NodePath("HitBox/CollisionShape2D:disabled")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [-0.610865]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("HitBox/CollisionShape2D:disabled")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
@@ -77,22 +61,10 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Area2D/CollisionShape2D:disabled")
+tracks/1/path = NodePath("HitBox/CollisionShape2D:disabled")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.3),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [false, true]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("HitBox/CollisionShape2D:disabled")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
 "times": PackedFloat32Array(0, 0.3),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
@@ -129,22 +101,10 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("Area2D/CollisionShape2D:disabled")
+tracks/2/path = NodePath("HitBox/CollisionShape2D:disabled")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [false, true]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("HitBox/CollisionShape2D:disabled")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
 "times": PackedFloat32Array(0, 0.5),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
@@ -163,27 +123,19 @@ size = Vector2(16.5937, 10.0388)
 
 [node name="Sword" type="Sprite2D"]
 visible = false
-position = Vector2(0, 7)
+position = Vector2(-9.53674e-07, 8)
 rotation = -0.610865
 texture = ExtResource("1_v3cae")
 centered = false
 offset = Vector2(5, -21)
 script = ExtResource("2_uvf06")
 
-[node name="Area2D" type="Area2D" parent="."]
-rotation = 0.785398
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-position = Vector2(-4.76837e-07, -19)
-shape = SubResource("CapsuleShape2D_bdllh")
-disabled = true
-
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_7r37y")
 }
 
-[node name="HitBox" parent="." instance=ExtResource("3_sdv0x")]
+[node name="HitBox" parent="." instance=ExtResource("3_b4cu6")]
 position = Vector2(2.43244, -9.64218)
 collision_layer = 4
 

@@ -1,15 +1,15 @@
 extends CharacterBody2D
 
 @onready var animated_sprite = $Body
-@onready var cursor = $Cursor
 @onready var animation_player = $Body/AnimationPlayer
 @onready var skill_cd = $Timers/SkillCD
 @onready var attack_cd = $Timers/AttackCD
 @onready var dash_timer = $Timers/DashTimer
 @onready var dash_sword = $AttackObjects/Sword
+@onready var aiming_cursor = $AimingCursor
+
 
 var speed = 120.0
-var hp = 100.0
 var mouse_position
 var input_vector
 
@@ -72,18 +72,6 @@ func _input(event):
 			castSkill()
 
 func cursoraiming():
-	cursor.look_at(mouse_position)
-	cursor.rotate(PI/2)
-	
-	var mouse_distance = position.distance_to(mouse_position)
-	
-	if abs(mouse_distance) > 35:
-		cursor.offset = Vector2(0, -35)
-	elif abs(mouse_distance) < 5:
-		cursor.offset = Vector2(0, -5)
-	else:
-		cursor.offset = Vector2(0, -abs(mouse_distance))
-	
 	if mouse_position[0] > position[0]:
 		animated_sprite.flip_h = false
 	elif mouse_position[0] < position[0]:
@@ -132,6 +120,3 @@ func _on_dash_timer_timeout():
 	speed = 120
 
 
-func _on_hurt_box_hurt(damage):
-	hp -= damage
-	print(hp)

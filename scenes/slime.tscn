@@ -3,9 +3,10 @@
 [ext_resource type="Texture2D" uid="uid://0uwdtua7bq88" path="res://assets/enemy/slime-Sheet.png" id="1_sdelf"]
 [ext_resource type="Script" path="res://scripts/slime.gd" id="1_vn1gi"]
 [ext_resource type="Script" path="res://scripts/State Machine.gd" id="3_1cpaf"]
-[ext_resource type="PackedScene" uid="uid://c530pr3b3r838" path="res://scenes/hurt_box.tscn" id="5_6wmbo"]
+[ext_resource type="PackedScene" uid="uid://c530pr3b3r838" path="res://scenes/utilcomponents/hurt_box.tscn" id="5_0uk7n"]
 [ext_resource type="Script" path="res://scripts/EnemyFollow.gd" id="5_atnl5"]
-[ext_resource type="PackedScene" uid="uid://br5rilejk78ry" path="res://scenes/hit_box.tscn" id="6_ayowu"]
+[ext_resource type="PackedScene" uid="uid://cytriikyqsa7y" path="res://scenes/utilcomponents/hit_box.tscn" id="6_w1cxc"]
+[ext_resource type="PackedScene" uid="uid://u8m6dpbdfn7s" path="res://scenes/utilcomponents/health_component.tscn" id="7_4uv5t"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6jkb2"]
 atlas = ExtResource("1_sdelf")
@@ -177,18 +178,6 @@ tracks/1/keys = {
 "update": 1,
 "values": [&"default"]
 }
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("CollisionShape2D:position")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0, -2)]
-}
 
 [sub_resource type="Animation" id="Animation_wuom1"]
 resource_name = "attack"
@@ -216,18 +205,6 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [&"attack"]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("CollisionShape2D:position")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
-"update": 0,
-"values": [Vector2(0, -2), Vector2(0, -1), Vector2(-2, -1), Vector2(-1, -7), Vector2(1, -12), Vector2(3, -6), Vector2(2, -2), Vector2(1, -1), Vector2(0, -2)]
 }
 
 [sub_resource type="Animation" id="Animation_dawfd"]
@@ -296,10 +273,6 @@ _data = {
 "idle": SubResource("Animation_4c778")
 }
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_jb8du"]
-radius = 6.0
-height = 20.0
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7abdg"]
 size = Vector2(23, 17)
 
@@ -320,12 +293,6 @@ libraries = {
 "": SubResource("AnimationLibrary_2goki")
 }
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
-position = Vector2(0, -2)
-rotation = 1.5708
-shape = SubResource("CapsuleShape2D_jb8du")
-
 [node name="State Machine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
 script = ExtResource("3_1cpaf")
 initial_state = NodePath("Follow")
@@ -334,23 +301,28 @@ initial_state = NodePath("Follow")
 script = ExtResource("5_atnl5")
 enemy = NodePath("../..")
 
-[node name="HurtBox" parent="." instance=ExtResource("5_6wmbo")]
+[node name="HurtBox" parent="." instance=ExtResource("5_0uk7n")]
 visible = false
 collision_mask = 4
+damage = 50
 
 [node name="CollisionShape2D" parent="HurtBox" index="0"]
 position = Vector2(0.5, -2.5)
 shape = SubResource("RectangleShape2D_7abdg")
 
-[node name="HitBox" parent="." instance=ExtResource("6_ayowu")]
+[node name="HitBox" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("6_w1cxc")]
 visible = false
 position = Vector2(-3.53798, -2.2936)
 collision_layer = 2
+health_component = NodePath("../HealthComponent")
 
 [node name="CollisionShape2D" parent="HitBox" index="0"]
 position = Vector2(3.53798, 0.2936)
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_6vwk6")
+
+[node name="HealthComponent" parent="." instance=ExtResource("7_4uv5t")]
+MAX_HEALTH = 100.0
 
 [connection signal="hurt" from="HurtBox" to="." method="_on_hurt_box_hurt"]
 
