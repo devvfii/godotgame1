@@ -6,7 +6,7 @@ extends Area2D
 @onready var collision = $CollisionShape2D
 @onready var timer = $Timer
 
-signal hurt(attack: Attack)
+signal wasHurt(attack: Attack)
 
 func _on_area_entered(area):
 	if area is HitBox:
@@ -22,8 +22,8 @@ func _on_area_entered(area):
 		
 		var attack = Attack.new()
 		attack.basedamage = area.damage
-		
-		emit_signal("hurt", attack)
+		attack.direction = Vector2(cos(area.global_position.angle_to_point(global_position)),sin(area.global_position.angle_to_point(global_position)))
+		emit_signal("wasHurt", attack)
 
 func damage(attack: Attack):
 	if health_component:

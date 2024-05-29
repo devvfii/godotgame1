@@ -1,10 +1,11 @@
-[gd_scene load_steps=34 format=3 uid="uid://bf7x03qaofq1g"]
+[gd_scene load_steps=35 format=3 uid="uid://bf7x03qaofq1g"]
 
 [ext_resource type="Texture2D" uid="uid://0uwdtua7bq88" path="res://assets/enemy/slime-Sheet.png" id="1_sdelf"]
-[ext_resource type="Script" path="res://scripts/slime.gd" id="1_vn1gi"]
-[ext_resource type="Script" path="res://scripts/State Machine.gd" id="3_1cpaf"]
+[ext_resource type="Script" path="res://scripts/enemies/slime.gd" id="1_vn1gi"]
+[ext_resource type="Script" path="res://scripts/states/State Machine.gd" id="3_s3hu5"]
+[ext_resource type="Script" path="res://scripts/states/EnemyFollow.gd" id="4_6ashb"]
 [ext_resource type="PackedScene" uid="uid://c530pr3b3r838" path="res://scenes/utilcomponents/hurt_box.tscn" id="5_0uk7n"]
-[ext_resource type="Script" path="res://scripts/EnemyFollow.gd" id="5_atnl5"]
+[ext_resource type="Script" path="res://scripts/states/EnemyHurt.gd" id="5_m170x"]
 [ext_resource type="PackedScene" uid="uid://cytriikyqsa7y" path="res://scenes/utilcomponents/hit_box.tscn" id="6_w1cxc"]
 [ext_resource type="PackedScene" uid="uid://u8m6dpbdfn7s" path="res://scenes/utilcomponents/health_component.tscn" id="7_4uv5t"]
 
@@ -294,12 +295,17 @@ libraries = {
 }
 
 [node name="State Machine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
-script = ExtResource("3_1cpaf")
+script = ExtResource("3_s3hu5")
 initial_state = NodePath("Follow")
 
 [node name="Follow" type="Node" parent="State Machine" node_paths=PackedStringArray("enemy")]
-script = ExtResource("5_atnl5")
+script = ExtResource("4_6ashb")
 enemy = NodePath("../..")
+
+[node name="Hurt" type="Node" parent="State Machine" node_paths=PackedStringArray("enemy")]
+script = ExtResource("5_m170x")
+enemy = NodePath("../..")
+move_speed = 120.0
 
 [node name="HurtBox" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("5_0uk7n")]
 visible = false
@@ -324,7 +330,9 @@ shape = SubResource("CapsuleShape2D_6vwk6")
 [node name="HealthComponent" parent="." instance=ExtResource("7_4uv5t")]
 MAX_HEALTH = 100.0
 
-[connection signal="hurt" from="HurtBox" to="." method="_on_hurt_box_hurt"]
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
+[connection signal="wasHurt" from="HurtBox" to="." method="_on_hurt_box_was_hurt"]
+[connection signal="wasHurt" from="HurtBox" to="State Machine/Hurt" method="_on_hurt_box_was_hurt"]
 
 [editable path="HurtBox"]
 [editable path="HitBox"]
