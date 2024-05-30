@@ -9,8 +9,15 @@ var start
 var speed = 450 * PI / 180
 const SWING_FRICTION = 680 * PI / 180
 
+var mainAttack := Attack.new()
+var specialAttack := Attack.new()
+
 func _ready():
 	hitbox.disabled = true
+	
+	mainAttack.basedamage = 40
+
+	specialAttack.basedamage = 30
 
 func activate(aim_vector):
 	direction_vector = aim_vector

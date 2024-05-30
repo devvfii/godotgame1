@@ -2,11 +2,15 @@ extends CharacterBody2D
 
 @onready var animated_sprite = $Body
 @onready var animation_player = $Body/AnimationPlayer
+
 @onready var skill_cd = $Timers/SkillCD
 @onready var attack_cd = $Timers/AttackCD
 @onready var dash_timer = $Timers/DashTimer
 @onready var dash_sword = $AttackObjects/Sword
+
 @onready var aiming_cursor = $AimingCursor
+
+@onready var swordsman_basic = $AttackObjects/SwordsmanBasic
 
 
 var speed = 120.0
@@ -30,8 +34,10 @@ func _physics_process(delta):
 	input_vector.y = Input.get_action_strength("move_down") - Input.get_action_strength("move_up")
 	input_vector = input_vector.normalized()
 	
-	# cursor stuff
-	cursoraiming()
+	if mouse_position[0] > position[0]:
+		animated_sprite.flip_h = false
+	elif mouse_position[0] < position[0]:
+		animated_sprite.flip_h = true
 	
 	if dash_sword.visible:
 		dash_sword.position = position
@@ -62,20 +68,12 @@ func _input(event):
 	if event is InputEventMouseButton and event.pressed:
 		if Input.is_action_just_pressed("attack") and not isRolling and not isAttacking:
 			aim_vector = position.direction_to(mouse_position)
-			dash_sword.position = position
-			dash_sword.rotation = aim_vector.angle() + PI/4
-			attack()
+			swordsman_basic.activate(aim_vector)
 		if Input.is_action_just_pressed("skill") and not isRolling and not inSkill and not isAttacking:
 			aim_vector = position.direction_to(mouse_position)
 			dash_sword.position = position
 			dash_sword.rotation = aim_vector.angle() + PI/4
 			castSkill()
-
-func cursoraiming():
-	if mouse_position[0] > position[0]:
-		animated_sprite.flip_h = false
-	elif mouse_position[0] < position[0]:
-		animated_sprite.flip_h = true
 
 func actionRoll():
 	roll_vector = input_vector
@@ -98,8 +96,6 @@ func attack():
 	attack_cd.one_shot = true
 	isAttacking = true
 	attack_cd.start(0.5)
-	
-	dash_sword.swing(aim_vector)
 
 
 func _on_animation_player_animation_finished(anim_name):
