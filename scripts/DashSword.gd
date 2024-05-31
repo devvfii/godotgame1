@@ -1,7 +1,7 @@
 extends Sprite2D
 
 @onready var animation_player = $AnimationPlayer
-@onready var hitbox = $HitBox/CollisionShape2D
+@onready var hitbox = $HitBox
 
 var direction_vector
 var isSwinging = false
@@ -13,11 +13,9 @@ var mainAttack := Attack.new()
 var specialAttack := Attack.new()
 
 func _ready():
-	hitbox.disabled = true
-	
-	mainAttack.basedamage = 40
-
-	specialAttack.basedamage = 30
+	mainAttack.base_damage = 40
+	specialAttack.base_damage = 30
+	hitbox.load_attack(specialAttack)
 
 func activate(aim_vector):
 	direction_vector = aim_vector

@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://cswqrjwso4m7c" path="res://scenes/aiming_cursor.tscn" id="3_jh0uo"]
 [ext_resource type="PackedScene" uid="uid://cyiyj1ebmlwdx" path="res://scenes/sword.tscn" id="4_f2hgx"]
 [ext_resource type="PackedScene" uid="uid://c530pr3b3r838" path="res://scenes/utilcomponents/hurt_box.tscn" id="5_7c6dn"]
-[ext_resource type="PackedScene" uid="uid://biphrcasoy2rw" path="res://scenes/swordsman/swordsmanbasic.tscn" id="5_xb2jv"]
+[ext_resource type="PackedScene" uid="uid://biphrcasoy2rw" path="res://scenes/playablechars/swordsman/swordsmanbasic.tscn" id="5_xb2jv"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4o8i8"]
 atlas = ExtResource("1_un3vt")

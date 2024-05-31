@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3 uid="uid://dduq7q6rxipgn"]
+
+[ext_resource type="Script" path="res://scripts/playablechars/swordsman/Swordsman.gd" id="1_xgwua"]
+[ext_resource type="PackedScene" uid="uid://c530pr3b3r838" path="res://scenes/utilcomponents/hurt_box.tscn" id="2_d5482"]
+[ext_resource type="Texture2D" uid="uid://di265ay15psx2" path="res://assets/player/swordsman.png" id="2_ntgbh"]
+
+[node name="Swordsman" type="CharacterBody2D"]
+script = ExtResource("1_xgwua")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_ntgbh")
+offset = Vector2(-5, -48)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+
+[node name="HurtBox" parent="." instance=ExtResource("2_d5482")]

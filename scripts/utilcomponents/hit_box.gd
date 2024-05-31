@@ -1,20 +1,17 @@
 extends Area2D
 class_name HitBox
 
-@export var damage : int
-
 @onready var collision = $CollisionShape2D
 @onready var timer = $Timer
 
-var attackObj : Attack
+var attack_object : Attack
 
-func tempdisable():
+func temp_disable():
 	collision.call_deferred("set","disabled", true)
 	timer.start()
 	
-func loadAttack(attack: Attack):
-	attackObj = attack
-	damage = attackObj.basedamage
+func load_attack(attack: Attack):
+	attack_object = attack
 
 func _on_timer_timeout():
 	collision.call_deferred("set","disabled", false)

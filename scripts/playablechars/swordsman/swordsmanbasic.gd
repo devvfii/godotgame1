@@ -10,18 +10,15 @@ extends AnimatedSprite2D
 var status := true
 
 var direction : Vector2
-var attackObj1 := Attack.new()
-var attackObj2 := Attack.new()
+var attack_object1 := Attack.new()
+var attack_object2 := Attack.new()
 
 func _ready():
-	#hitbox1.disabled = true
-	#hitbox2.disabled = true
+	attack_object1.base_damage = 40
+	attack_object2.base_damage = 50
 	
-	attackObj1.basedamage = 40
-	attackObj2.basedamage = 50
-	
-	hitbox1.loadAttack(attackObj1)
-	hitbox2.loadAttack(attackObj2)
+	hitbox1.load_attack(attack_object1)
+	hitbox2.load_attack(attack_object2)
 	
 func activate(aim_direction):
 	if status:

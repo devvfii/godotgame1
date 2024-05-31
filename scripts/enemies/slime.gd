@@ -6,13 +6,16 @@ class_name Slime
 @onready var animated_sprite_2d = $AnimatedSprite2D
 @onready var state_machine = $"State Machine"
 @onready var health = $HealthComponent
+@onready var hitbox = $HitBox
 
 var speed: float
 var baseatk: float
 var target: CharacterBody2D
 	
 func _ready():
-	pass
+	var attack = Attack.new()
+	attack.base_damage = 40.0
+	hitbox.load_attack(attack)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(_delta):
