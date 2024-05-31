@@ -17,11 +17,10 @@ func _on_area_entered(area):
 			1:
 				pass
 			2:
-				if area.has_method("tempdisable"):
+				if area.has_method("temp_disable"):
 					area.tempdisable()
 		
-		var attack = Attack.new()
-		attack.basedamage = area.damage
+		var attack = area.attack_object
 		attack.direction = Vector2(cos(area.global_position.angle_to_point(global_position)),sin(area.global_position.angle_to_point(global_position)))
 		emit_signal("wasHurt", attack)
 

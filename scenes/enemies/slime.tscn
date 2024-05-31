@@ -320,7 +320,6 @@ shape = SubResource("RectangleShape2D_7abdg")
 visible = false
 position = Vector2(-3.53798, -2.2936)
 collision_layer = 2
-damage = 20
 
 [node name="CollisionShape2D" parent="HitBox" index="0"]
 position = Vector2(3.53798, 0.2936)
