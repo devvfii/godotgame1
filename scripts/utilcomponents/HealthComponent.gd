@@ -11,4 +11,4 @@ func damage(attack: Attack):
 	health -= attack.base_damage
 	
 	if health <= 0:
-		get_parent().queue_free()
+		get_parent().die()

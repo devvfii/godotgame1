@@ -195,7 +195,7 @@ points = PackedVector2Array(-33, 7, 15, -28, 40, -23, 45, 11, 10, 1)
 visible = false
 position = Vector2(1, 0)
 sprite_frames = SubResource("SpriteFrames_xa2os")
-frame = 10
+frame = 2
 offset = Vector2(0, -20)
 script = ExtResource("2_o8qq8")
 

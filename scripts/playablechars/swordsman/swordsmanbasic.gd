@@ -22,6 +22,7 @@ func _ready():
 	
 func activate(aim_direction):
 	if status:
+		direction = aim_direction
 		rotation = aim_direction.angle() + PI/2
 		animation_player.play("basic")
 		visible = true
@@ -30,12 +31,11 @@ func activate(aim_direction):
 	else:
 		print("attack on cooldown")
 
-func _physics_process(delta):
-	global_position = player.global_position
+func _physics_process(_delta):
+	global_position = Vector2(player.global_position.x + direction.x * 15,player.global_position.y + direction.y * 15)
 
 func _on_cooldown_timeout():
 	status = true
 
-
-func _on_animation_player_animation_finished(anim_name):
+func _on_animation_player_animation_finished(_anim_name):
 	visible = false

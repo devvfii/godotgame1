@@ -37,9 +37,12 @@ func _physics_process(_delta):
 
 func _on_animation_player_animation_finished(anim_name):
 	if anim_name == "hurt":
-		state_machine.on_child_transition(state_machine.current_state, "follow")
+		state_machine.current_state.transition_to("follow")
 
 
 func _on_hurt_box_was_hurt(attack):
-	state_machine.on_child_transition(state_machine.current_state, "hurt")
+	state_machine.current_state.transition_to("hurt")
 	health.damage(attack)
+	
+func die():
+	queue_free()

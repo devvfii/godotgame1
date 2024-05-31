@@ -1,16 +1,73 @@
-[gd_scene load_steps=4 format=3 uid="uid://dduq7q6rxipgn"]
+[gd_scene load_steps=13 format=3 uid="uid://dduq7q6rxipgn"]
 
 [ext_resource type="Script" path="res://scripts/playablechars/swordsman/Swordsman.gd" id="1_xgwua"]
 [ext_resource type="PackedScene" uid="uid://c530pr3b3r838" path="res://scenes/utilcomponents/hurt_box.tscn" id="2_d5482"]
 [ext_resource type="Texture2D" uid="uid://di265ay15psx2" path="res://assets/player/swordsman.png" id="2_ntgbh"]
+[ext_resource type="Script" path="res://scripts/states/State Machine.gd" id="4_d6ffq"]
+[ext_resource type="Script" path="res://scripts/states/PlayerIdle.gd" id="5_gr4d6"]
+[ext_resource type="Script" path="res://scripts/states/PlayerAttacking.gd" id="6_32jrd"]
+[ext_resource type="PackedScene" uid="uid://cswqrjwso4m7c" path="res://scenes/aiming_cursor.tscn" id="6_q58he"]
+[ext_resource type="Script" path="res://scripts/states/PlayerRoll.gd" id="7_7n1ym"]
+[ext_resource type="PackedScene" uid="uid://biphrcasoy2rw" path="res://scenes/playablechars/swordsman/swordsmanbasic.tscn" id="7_updnr"]
+[ext_resource type="Script" path="res://scripts/states/PlayerHurt.gd" id="8_x7be7"]
+[ext_resource type="PackedScene" uid="uid://u8m6dpbdfn7s" path="res://scenes/utilcomponents/health_component.tscn" id="11_2su73"]
 
-[node name="Swordsman" type="CharacterBody2D"]
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_bp6su"]
+radius = 4.0
+height = 22.0
+
+[node name="Swordsman" type="CharacterBody2D" node_paths=PackedStringArray("sprite")]
 script = ExtResource("1_xgwua")
+sprite = NodePath("Sprite2D")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(-1.90735e-06, 0)
+scale = Vector2(0.46875, 0.46875)
 texture = ExtResource("2_ntgbh")
-offset = Vector2(-5, -48)
+offset = Vector2(-5, -40)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 
 [node name="HurtBox" parent="." instance=ExtResource("2_d5482")]
+collision_mask = 2
+
+[node name="CollisionShape2D" parent="HurtBox" index="0"]
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_bp6su")
+
+[node name="Timer" parent="HurtBox" index="1"]
+wait_time = 1.2
+
+[node name="State Machine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
+script = ExtResource("4_d6ffq")
+initial_state = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="State Machine"]
+script = ExtResource("5_gr4d6")
+
+[node name="Attacking" type="Node" parent="State Machine"]
+script = ExtResource("6_32jrd")
+
+[node name="Rolling" type="Node" parent="State Machine" node_paths=PackedStringArray("player")]
+script = ExtResource("7_7n1ym")
+player = NodePath("../..")
+
+[node name="Hurt" type="Node" parent="State Machine" node_paths=PackedStringArray("player")]
+script = ExtResource("8_x7be7")
+player = NodePath("../..")
+
+[node name="AimingCursor" parent="." instance=ExtResource("6_q58he")]
+maxDistance = 60
+
+[node name="AttackObjects" type="Node" parent="."]
+
+[node name="SwordsmanBasic" parent="AttackObjects" node_paths=PackedStringArray("player") instance=ExtResource("7_updnr")]
+position = Vector2(0, -13)
+player = NodePath("../..")
+
+[node name="HealthComponent" parent="." instance=ExtResource("11_2su73")]
+MAX_HEALTH = 200.0
+
+[connection signal="wasHurt" from="HurtBox" to="." method="_on_hurt_box_was_hurt"]
+
+[editable path="HurtBox"]

@@ -11,7 +11,7 @@ func Enter():
 	state_name = "Hurt"
 	player = get_tree().get_first_node_in_group("player")
 
-func Physics_Update(delta: float):
+func Physics_Update(_delta: float):
 	enemy.velocity = enemy.velocity.move_toward(Vector2.ZERO, 4.5)
 
 func _on_hurt_box_was_hurt(attack):
